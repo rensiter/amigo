@@ -30,6 +30,9 @@
           }
         }
       }
+    },
+    "Eduniti": {
+      "subjects": {}
     }
   },
   "lecture_ids": {
