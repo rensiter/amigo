@@ -35,7 +35,11 @@
       "subjects": {
         "Jee mains 2025": {
           "teacher": "Mohit sir",
-          "chapters": {}
+          "chapters": {
+            "Jan": {
+              "lectures": []
+            }
+          }
         }
       }
     }
