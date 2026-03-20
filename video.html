@@ -419,10 +419,14 @@ video{width:100%;height:100%;display:block;}
 // ══════════════════════════════════════════════════════════
 //  ⚙️  CONFIG — yahan apne server URLs daalo
 // ══════════════════════════════════════════════════════════
-const SRV = {
-  railway: 'https://amigo-backend-production.up.railway.app',  // Primary — always ON
-  render:  ''   // Render setup nahi hua — empty rakho
-};
+const RAILWAY = 'https://amigo-backend-production.up.railway.app';
+const RENDERS = [
+  'https://amigo-backend-bmr6.onrender.com',
+  // 'https://amigo-backend-r2.onrender.com',  // jaise badhao waise uncomment karo
+];
+
+// Backward compat
+const SRV = { railway: RAILWAY, render: '' };
 const DATA_URL = 'data.json';
 
 // ══════════════════════════════════════════════════════════
@@ -464,7 +468,7 @@ window.onload = async () => {
   setupDrag();
   await loadData();
   startVideo();           // ← Railway se immediately shuru
-  wakeRenderBg();         // ← Background mein Render jagao (silent)
+  // wakeRenderBg();      // Render setup hone ke baad uncomment karo
   renderBmarks();
   checkWatched();
 };
@@ -484,8 +488,7 @@ function startVideo() {
 //  2️⃣  BACKGROUND MEIN RENDER JAGAO — STUDENT KO PATA NA CHALE
 // ══════════════════════════════════════════════════════════
 async function wakeRenderBg() {
-  // Render URL nahi hai toh skip karo
-  if (!SRV.render) { console.log("Render disabled"); return; }
+  if (!SRV.render) return;  // Render disabled
   if (renderPing || renderUp) return;
   renderPing = true;
   // Try every 6 seconds, upto 90 seconds total
@@ -517,15 +520,16 @@ async function wakeRenderBg() {
 //   - Chapter khatam ho (next chapter render se)
 // ══════════════════════════════════════════════════════════
 function doSilentSwitch() {
-  if (!SRV.render || !swPending || !renderUp || activeSrv === 'render') return;
+  if (!swPending || !renderUp || activeSrv === 'render') return;
+  if (!window._activeRender) return;
   swPending = false;
 
-  const pos      = vid.currentTime;
-  const wasPaused= vid.paused;
+  const pos       = vid.currentTime;
+  const wasPaused = vid.paused;
 
-  // Silently swap
+  // Railway → Render silently switch
   activeSrv = 'render';
-  vid.src   = `${SRV.render}/stream/direct/${VID}`;
+  vid.src   = `${window._activeRender}/stream/direct/${VID}`;
   vid.load();
   vid.currentTime = pos;
   if (!wasPaused) vid.play().catch(()=>{});
