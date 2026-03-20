@@ -3,933 +3,692 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AMIGOPEDIA — Video</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<title>AMIGOPEDIA — Learn Together</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2e;
-  --card:#16162a;--card2:#1e1e35;--border:#2a2a45;
-  --accent:#6c63ff;--accent2:#a78bfa;--accent3:#f472b6;
-  --text:#e8e8f0;--text2:#a0a0c0;--text3:#6060a0;
-  --success:#34d399;--warn:#fbbf24;
+:root {
+  --bg: #0d0d14;
+  --bg2: #13131f;
+  --bg3: #1a1a2e;
+  --card: #16162a;
+  --card2: #1e1e35;
+  --border: #2a2a45;
+  --accent: #6c63ff;
+  --accent2: #a78bfa;
+  --accent3: #f472b6;
+  --text: #e8e8f0;
+  --text2: #a0a0c0;
+  --text3: #6060a0;
+  --success: #34d399;
+  --warn: #fbbf24;
+  --glow: 0 0 30px rgba(108,99,255,0.3);
 }
-[data-theme="light"]{
-  --bg:#f0f0ff;--bg2:#e8e8ff;--bg3:#dcdcff;
-  --card:#fff;--card2:#f5f5ff;--border:#c8c8e8;
-  --text:#1a1a3e;--text2:#4a4a7a;--text3:#8888aa;
+[data-theme="light"] {
+  --bg: #f0f0ff;
+  --bg2: #e8e8ff;
+  --bg3: #dcdcff;
+  --card: #ffffff;
+  --card2: #f5f5ff;
+  --border: #c8c8e8;
+  --text: #1a1a3e;
+  --text2: #4a4a7a;
+  --text3: #8888aa;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;}
 
+/* NOISE TEXTURE */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ANIMATED GRADIENT MESH */
+.mesh{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.12;animation:blobFloat 8s ease-in-out infinite;}
+.mesh-blob:nth-child(1){width:600px;height:600px;background:var(--accent);top:-100px;left:-200px;animation-delay:0s;}
+.mesh-blob:nth-child(2){width:400px;height:400px;background:var(--accent3);bottom:-100px;right:-100px;animation-delay:3s;}
+.mesh-blob:nth-child(3){width:300px;height:300px;background:var(--accent2);top:50%;left:50%;animation-delay:6s;}
+@keyframes blobFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-30px) scale(1.05);}}
+
+/* NAVBAR */
 nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(13,13,20,0.95);backdrop-filter:blur(20px);
+  background:rgba(13,13,20,0.85);
+  backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
-  padding:0 16px;height:56px;
-  display:flex;align-items:center;gap:10px;
+  padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
 }
-.back-btn{
-  width:34px;height:34px;border-radius:10px;
+.logo{
+  font-family:'Baloo 2',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.5px;
+}
+.logo span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;-webkit-text-fill-color:var(--text2);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.theme-btn{
+  width:40px;height:40px;border-radius:50%;
   background:var(--card);border:1px solid var(--border);
+  cursor:pointer;font-size:1.1rem;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:1rem;text-decoration:none;color:var(--text);
-}
-.nav-title{flex:1;font-weight:700;font-size:0.9rem;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.nav-actions{display:flex;gap:8px;}
-.nav-btn{
-  width:34px;height:34px;border-radius:10px;
-  background:var(--card);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:0.9rem;color:var(--text);transition:all 0.2s;
-}
-.nav-btn:hover,.nav-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
-
-/* SERVER BAR — only shows when needed */
-#srvBar{
-  padding:5px 16px;font-size:0.73rem;
-  display:none;align-items:center;gap:8px;
-  border-bottom:1px solid var(--border);
-  background:var(--bg2);color:var(--text3);
   transition:all 0.3s;
 }
-#srvBar.vis{display:flex;}
-.s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.s-dot.g{background:var(--success);}
-.s-dot.y{background:var(--warn);animation:blink 0.9s infinite;}
-.s-dot.p{background:var(--accent);}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
-
-.page{display:flex;min-height:calc(100vh - 56px);}
-.vcol{flex:1;min-width:0;}
-.scol{
-  width:320px;flex-shrink:0;
-  background:var(--bg2);border-left:1px solid var(--border);
-  display:flex;flex-direction:column;
-  max-height:calc(100vh - 56px);position:sticky;top:56px;
-}
-
-/* VIDEO */
-.vwrap{
-  position:relative;background:#000;
-  aspect-ratio:16/9;width:100%;overflow:hidden;
-}
-video{width:100%;height:100%;display:block;}
-
-/* BUFFER OVERLAY */
-.buf{
-  position:absolute;inset:0;z-index:5;
-  background:rgba(0,0,0,0.72);
-  display:none;flex-direction:column;
-  align-items:center;justify-content:center;gap:12px;
-}
-.buf.vis{display:flex;}
-.spin{
-  width:50px;height:50px;border-radius:50%;
-  border:3px solid rgba(255,255,255,0.12);
-  border-top-color:var(--accent);
-  animation:spin 0.75s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-.buf-t{color:rgba(255,255,255,0.8);font-size:0.85rem;font-weight:600;}
-.buf-s{color:rgba(255,255,255,0.4);font-size:0.72rem;}
-
-.sflash{
-  position:absolute;top:50%;transform:translateY(-50%);
-  background:rgba(0,0,0,0.65);border-radius:50px;
-  padding:10px 18px;font-size:0.9rem;font-weight:700;color:#fff;
-  pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:4;
-}
-.sflash.L{left:14px;}.sflash.R{right:14px;}
-.sflash.vis{opacity:1;}
-
-/* CONTROLS */
-.ctrl-wrap{
-  position:absolute;bottom:0;left:0;right:0;z-index:6;
-  background:linear-gradient(0,rgba(0,0,0,0.92),transparent);
-  padding:36px 12px 12px;
-  opacity:0;transition:opacity 0.3s;pointer-events:none;
-}
-.vwrap:hover .ctrl-wrap,
-.vwrap.sc .ctrl-wrap{opacity:1;pointer-events:all;}
-
-.pg-area{margin-bottom:9px;cursor:pointer;padding:5px 0;}
-.pg-bg{height:4px;background:rgba(255,255,255,0.2);border-radius:4px;
-  position:relative;transition:height 0.15s;}
-.pg-area:hover .pg-bg{height:6px;}
-.pg-played{position:absolute;inset:0;right:auto;
-  background:linear-gradient(90deg,var(--accent),var(--accent3));
-  border-radius:4px;transition:width 0.1s linear;}
-.pg-thumb{
-  position:absolute;top:50%;transform:translateY(-50%) scale(0);
-  width:14px;height:14px;border-radius:50%;background:#fff;
-  margin-left:-7px;transition:transform 0.15s;
-}
-.pg-area:hover .pg-thumb{transform:translateY(-50%) scale(1);}
-
-.crow{display:flex;align-items:center;gap:6px;}
-.cb{
-  background:none;border:none;cursor:pointer;color:#fff;
-  font-size:1.05rem;padding:6px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  transition:background 0.15s;
-}
-.cb:hover{background:rgba(255,255,255,0.15);}
-.ttime{font-size:0.77rem;color:rgba(255,255,255,0.7);padding:0 4px;white-space:nowrap;}
-.sp{flex:1;}
-.spd-pill{
-  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
-  border-radius:8px;padding:3px 10px;color:#fff;cursor:pointer;
-  font-family:'Nunito',sans-serif;font-size:0.77rem;font-weight:700;
-}
-.spd-menu{
-  position:absolute;bottom:52px;right:50px;
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;display:none;z-index:10;min-width:88px;
-}
-.spd-menu.op{display:block;}
-.so{padding:9px 18px;cursor:pointer;font-size:0.82rem;transition:background 0.12s;text-align:center;}
-.so:hover{background:var(--card);}
-.so.cur{color:var(--accent2);font-weight:800;}
-
-/* AUTO NEXT */
-.an-wrap{
-  display:none;margin:12px 16px;
+.theme-btn:hover{background:var(--accent);border-color:var(--accent);}
+.streak-badge{
+  display:flex;align-items:center;gap:6px;
   background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:14px 16px;
+  border-radius:20px;padding:6px 14px;font-size:0.85rem;font-weight:700;
 }
-.an-wrap.vis{display:block;}
-.an-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.an-title{font-weight:700;font-size:0.88rem;}
-.an-bar{height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:10px;}
-.an-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));
-  border-radius:4px;transition:width 1s linear;}
-.an-btns{display:flex;gap:8px;}
-.an-btn{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);
-  background:var(--card2);color:var(--text);cursor:pointer;
-  font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;transition:all 0.2s;}
-.an-btn.go{background:linear-gradient(135deg,var(--accent),var(--accent3));border:none;color:#fff;}
+.streak-badge .fire{font-size:1rem;}
 
-/* VIDEO INFO */
-.vinfo{padding:14px 18px;border-bottom:1px solid var(--border);}
-.vtitle{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:6px;}
-.vmeta{font-size:0.78rem;color:var(--text2);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
-.vacts{display:flex;gap:8px;flex-wrap:wrap;}
-.vab{
-  display:flex;align-items:center;gap:5px;
+/* HERO */
+.hero{
+  position:relative;z-index:1;
+  padding:80px 24px 40px;
+  text-align:center;
+  max-width:800px;margin:0 auto;
+}
+.hero-tag{
+  display:inline-block;
+  background:rgba(108,99,255,0.15);
+  border:1px solid rgba(108,99,255,0.3);
+  border-radius:20px;padding:6px 16px;
+  font-size:0.8rem;font-weight:700;color:var(--accent2);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Baloo 2',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:800;line-height:1.1;
+  margin-bottom:16px;
+}
+.hero h1 .highlight{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{color:var(--text2);font-size:1.1rem;line-height:1.7;}
+.search-bar{
+  margin:32px auto 0;max-width:480px;
+  display:flex;align-items:center;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:50px;padding:6px 6px 6px 20px;
+  transition:all 0.3s;
+}
+.search-bar:focus-within{border-color:var(--accent);box-shadow:var(--glow);}
+.search-bar input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--text);font-family:'Nunito',sans-serif;font-size:0.95rem;
+}
+.search-bar input::placeholder{color:var(--text3);}
+.search-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border:none;border-radius:40px;padding:10px 20px;
+  color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;
+  cursor:pointer;transition:all 0.3s;
+}
+.search-btn:hover{transform:scale(1.05);}
+
+/* STATS BAR */
+.stats-bar{
+  position:relative;z-index:1;
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  padding:24px 24px;max-width:900px;margin:0 auto;
+}
+.stat-chip{
   background:var(--card);border:1px solid var(--border);
-  border-radius:10px;padding:7px 12px;cursor:pointer;
-  font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:700;
-  color:var(--text2);transition:all 0.2s;
-}
-.vab:hover{border-color:var(--accent);color:var(--accent2);}
-.vab.on{background:rgba(108,99,255,0.15);border-color:var(--accent);color:var(--accent2);}
-
-/* SIDE PANEL */
-.ptabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.ptab{
-  flex:1;padding:11px 4px;text-align:center;cursor:pointer;
-  font-size:0.77rem;font-weight:700;color:var(--text3);
-  border-bottom:2px solid transparent;transition:all 0.2s;
-}
-.ptab.on{color:var(--accent2);border-bottom-color:var(--accent);}
-.pbody{flex:1;overflow-y:auto;padding:12px;}
-.pbody::-webkit-scrollbar{width:3px;}
-.pbody::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-.pnl{display:none;}
-.pnl.on{display:block;}
-
-.slec{
+  border-radius:16px;padding:12px 20px;
   display:flex;align-items:center;gap:10px;
-  padding:9px 10px;border-radius:11px;cursor:pointer;
-  transition:all 0.2s;margin-bottom:3px;
+  font-size:0.85rem;
+}
+.stat-chip .num{font-weight:800;font-size:1.1rem;color:var(--accent2);}
+.stat-chip .lbl{color:var(--text2);}
+
+/* SECTION */
+.section{position:relative;z-index:1;padding:0 24px 48px;max-width:1100px;margin:0 auto;}
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.section-title{
+  font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:700;
+  display:flex;align-items:center;gap:10px;
+}
+.section-title .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  display:inline-block;
+}
+.see-all{color:var(--accent2);font-size:0.85rem;font-weight:700;text-decoration:none;cursor:pointer;}
+
+/* BATCH PILLS */
+.batch-tabs{
+  display:flex;gap:10px;flex-wrap:wrap;
+  margin-bottom:32px;
+}
+.batch-tab{
+  padding:10px 20px;border-radius:30px;
+  border:1.5px solid var(--border);
+  background:var(--card);color:var(--text2);
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;
+  cursor:pointer;transition:all 0.25s;
+  white-space:nowrap;
+}
+.batch-tab:hover{border-color:var(--accent);color:var(--accent2);}
+.batch-tab.active{
+  background:linear-gradient(135deg,var(--accent),#8b5cf6);
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 20px rgba(108,99,255,0.35);
+}
+
+/* SUBJECT CARDS */
+.subjects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
+}
+.subject-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:24px;
+  cursor:pointer;transition:all 0.3s;
+  position:relative;overflow:hidden;
   text-decoration:none;color:inherit;
+  display:block;
 }
-.slec:hover{background:var(--card);}
-.slec.cur{background:rgba(108,99,255,0.15);border:1px solid rgba(108,99,255,0.3);}
-.slec.done{opacity:0.6;}
-.snum{
-  width:30px;height:30px;border-radius:8px;
-  background:var(--bg3);display:flex;align-items:center;justify-content:center;
-  font-size:0.72rem;font-weight:800;color:var(--accent2);flex-shrink:0;
+.subject-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  opacity:0;transition:opacity 0.3s;
 }
-.slec.cur .snum{background:var(--accent);color:#fff;}
-.slec.done .snum{background:rgba(52,211,153,0.15);color:var(--success);}
-.sit .st{font-size:0.83rem;font-weight:700;}
-.sit .sm{font-size:0.72rem;color:var(--text3);}
-
-/* BOOKMARKS */
-.bmi{
-  display:flex;align-items:center;gap:10px;
-  padding:10px;background:var(--card);border:1px solid var(--border);
-  border-radius:11px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;
+.subject-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(108,99,255,0.2);
 }
-.bmi:hover{border-color:var(--accent);}
-.bmt{background:var(--accent);color:#fff;border-radius:7px;
-  padding:3px 10px;font-size:0.78rem;font-weight:700;white-space:nowrap;}
-.bmn{flex:1;font-size:0.83rem;}
-.bmx{color:var(--text3);padding:4px;border-radius:6px;cursor:pointer;}
-.bmx:hover{color:#f87171;}
+.subject-card:hover::before{opacity:0.06;}
+.subject-card .icon{
+  font-size:2.2rem;margin-bottom:14px;
+  display:block;
+}
+.subject-card .subject-name{
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.15rem;
+  margin-bottom:4px;
+}
+.subject-card .teacher{
+  font-size:0.8rem;color:var(--text3);margin-bottom:16px;
+}
+.subject-card .meta{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.subject-card .chapters{
+  font-size:0.8rem;color:var(--text2);
+  background:var(--bg3);border-radius:10px;padding:4px 10px;
+}
+.progress-ring{
+  width:40px;height:40px;position:relative;
+}
+.progress-ring svg{transform:rotate(-90deg);}
+.progress-ring .bg{stroke:var(--border);stroke-width:3;fill:none;}
+.progress-ring .fill{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;transition:stroke-dashoffset 0.5s ease;}
+.progress-ring .pct{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;font-weight:800;color:var(--accent2);
+}
+.card-accent-line{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:20px 20px 0 0;
+}
 
-/* POMODORO */
-.pomowrap{text-align:center;padding:16px 0;}
-.pomoring{width:130px;height:130px;margin:0 auto 14px;position:relative;}
-.pomoring svg{transform:rotate(-90deg);}
-.pr-bg{stroke:var(--border);stroke-width:8;fill:none;}
-.pr-fill{stroke:var(--accent);stroke-width:8;fill:none;stroke-linecap:round;transition:stroke-dashoffset 0.5s;}
-.pomoin{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.pomoin .big{font-family:'Baloo 2',sans-serif;font-size:1.9rem;font-weight:800;}
-.pomoin .lbl{font-size:0.65rem;color:var(--text3);}
-.pomops{display:flex;gap:6px;justify-content:center;margin-bottom:12px;}
-.ppb{padding:6px 12px;border-radius:10px;border:1px solid var(--border);
-  background:var(--card);color:var(--text2);cursor:pointer;
-  font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:700;transition:all 0.2s;}
-.ppb:hover,.ppb.on{border-color:var(--accent);color:var(--accent2);}
-.pomoc{display:flex;gap:8px;justify-content:center;}
-.pcb{padding:8px 18px;border-radius:10px;border:1px solid var(--border);
-  background:var(--card);color:var(--text);cursor:pointer;
-  font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;transition:all 0.2s;}
-.pcb.go{background:linear-gradient(135deg,var(--accent),var(--accent3));border:none;color:#fff;}
-
-.toast{
-  position:fixed;bottom:70px;left:50%;
-  transform:translateX(-50%) translateY(120px);
+/* CONTINUE WATCHING */
+.continue-list{display:flex;flex-direction:column;gap:12px;}
+.continue-item{
+  display:flex;align-items:center;gap:16px;
   background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:11px 20px;
-  font-weight:600;font-size:0.83rem;
-  box-shadow:0 8px 32px rgba(0,0,0,0.5);
-  z-index:999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  display:flex;align-items:center;gap:8px;white-space:nowrap;
+  border-radius:16px;padding:16px;cursor:pointer;
+  transition:all 0.25s;text-decoration:none;color:inherit;
 }
-.toast.vis{transform:translateX(-50%) translateY(0);}
-.cfp{position:fixed;pointer-events:none;z-index:9999;animation:cff 3s forwards;}
-@keyframes cff{0%{transform:translateY(-10px) rotate(0);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+.continue-item:hover{border-color:var(--accent);transform:translateX(4px);}
+.continue-thumb{
+  width:60px;height:60px;border-radius:12px;
+  background:var(--bg3);display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;flex-shrink:0;
+}
+.continue-info{flex:1;}
+.continue-info .lec-title{font-weight:700;font-size:0.95rem;margin-bottom:2px;}
+.continue-info .lec-sub{font-size:0.8rem;color:var(--text2);}
+.continue-info .prog-bar{
+  margin-top:8px;height:4px;background:var(--border);border-radius:4px;overflow:hidden;
+}
+.continue-info .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:4px;}
+.continue-play{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+}
 
-@media(max-width:900px){
-  .scol{display:none;}
-  .scol.vis{display:flex;position:fixed;top:56px;right:0;bottom:0;
-    width:300px;z-index:150;box-shadow:-4px 0 24px rgba(0,0,0,0.5);}
+/* LOADING SKELETON */
+.skeleton{
+  background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:8px;
 }
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:14px 24px;
+  font-weight:600;font-size:0.9rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  z-index:999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  text-align:center;padding:32px 24px;
+  border-top:1px solid var(--border);
+  color:var(--text3);font-size:0.85rem;
+}
+footer strong{color:var(--accent2);}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero h1{font-size:2rem;}
+  .stats-bar{gap:10px;}
+  .stat-chip{padding:10px 14px;}
+  .subjects-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* LOADING OVERLAY */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;transition:opacity 0.5s;
+}
+#loader .logo-big{
+  font-family:'Baloo 2',sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.loader-bar{
+  width:200px;height:3px;background:var(--border);border-radius:3px;overflow:hidden;
+}
+.loader-fill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));
+  border-radius:3px;animation:loadFill 1.5s ease-out forwards;
+}
+@keyframes loadFill{0%{width:0;}100%{width:100%;}}
 </style>
 </head>
 <body>
+
+<div id="loader">
+  <div class="logo-big">AMIGOPEDIA</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div style="color:var(--text3);font-size:0.85rem;">Content load ho raha hai...</div>
+</div>
+
+<div class="mesh">
+  <div class="mesh-blob"></div>
+  <div class="mesh-blob"></div>
+  <div class="mesh-blob"></div>
+</div>
+
+<!-- NAVBAR -->
 <nav>
-  <a class="back-btn" id="backBtn" href="index.html">←</a>
-  <div class="nav-title" id="navTitle">Loading...</div>
-  <div class="nav-actions">
-    <button class="nav-btn" onclick="addBm()" title="Bookmark">🔖</button>
-    <button class="nav-btn" onclick="openPanel('pomodoro')" title="Timer">⏰</button>
-    <button class="nav-btn" onclick="toggleSide()">☰</button>
-    <button class="nav-btn" onclick="toggleTheme()">🌙</button>
+  <div class="logo">AMIGO<span>PEDIA</span></div>
+  <div class="nav-right">
+    <div class="streak-badge"><span class="fire">🔥</span><span id="streakCount">0</span> day streak</div>
+    <button class="theme-btn" onclick="toggleTheme()" title="Theme toggle">🌙</button>
   </div>
 </nav>
 
-<!-- SERVER STATUS BAR — student ko tab dikhega jab waking ho -->
-<div id="srvBar">
-  <div class="s-dot g" id="sDot"></div>
-  <span id="srvLabel">Connected</span>
-</div>
-
-<div class="page">
-  <div class="vcol">
-    <div class="vwrap" id="vWrap">
-      <video id="vid" preload="metadata" playsinline></video>
-
-      <!-- Buffering overlay -->
-      <div class="buf" id="buf">
-        <div class="spin"></div>
-        <div class="buf-t" id="bufT">Video load ho rahi hai...</div>
-        <div class="buf-s" id="bufS"></div>
-      </div>
-
-      <div class="sflash L" id="sfL">⏪ 10s</div>
-      <div class="sflash R" id="sfR">⏩ 10s</div>
-
-      <div class="ctrl-wrap" id="ctrlWrap">
-        <div class="pg-area" id="pgArea">
-          <div class="pg-bg">
-            <div class="pg-played" id="pgP" style="width:0%"></div>
-            <div class="pg-thumb" id="pgT" style="left:0%"></div>
-          </div>
-        </div>
-        <div class="crow">
-          <button class="cb" id="playBtn" onclick="togglePlay()">▶</button>
-          <button class="cb" onclick="seekBy(-10)">⏪</button>
-          <button class="cb" onclick="seekBy(10)">⏩</button>
-          <button class="cb" id="muteBtn" onclick="toggleMute()">🔊</button>
-          <input type="range" id="volR" min="0" max="1" step="0.05" value="1"
-            oninput="setVol(this.value)"
-            style="width:55px;height:3px;accent-color:var(--accent);cursor:pointer;"/>
-          <span class="ttime" id="ttime">0:00 / 0:00</span>
-          <div class="sp"></div>
-          <button class="spd-pill" id="spdBtn" onclick="toggleSpd()">1×</button>
-          <button class="cb" onclick="togglePIP()">⧉</button>
-          <button class="cb" onclick="toggleFS()">⛶</button>
-        </div>
-        <div class="spd-menu" id="spdMenu">
-          <div class="so" onclick="setSpd(0.5)">0.5×</div>
-          <div class="so" onclick="setSpd(0.75)">0.75×</div>
-          <div class="so cur" onclick="setSpd(1)">1×</div>
-          <div class="so" onclick="setSpd(1.25)">1.25×</div>
-          <div class="so" onclick="setSpd(1.5)">1.5×</div>
-          <div class="so" onclick="setSpd(1.75)">1.75×</div>
-          <div class="so" onclick="setSpd(2)">2×</div>
-          <div class="so" onclick="setSpd(2.5)">2.5×</div>
-          <div class="so" onclick="setSpd(3)">3×</div>
-          <div class="so" onclick="setSpd(4)">4×</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AUTO NEXT -->
-    <div class="an-wrap" id="anWrap">
-      <div class="an-top">
-        <div class="an-title">⏭ Agla: <span id="anTitle">—</span></div>
-        <span id="anCnt" style="font-size:0.8rem;color:var(--text3);font-weight:700;"></span>
-      </div>
-      <div class="an-bar"><div class="an-fill" id="anFill" style="width:100%"></div></div>
-      <div class="an-btns">
-        <button class="an-btn" onclick="cancelAN()">✕ Roko</button>
-        <button class="an-btn go" onclick="goNext()">▶ Abhi</button>
-      </div>
-    </div>
-
-    <!-- VIDEO INFO -->
-    <div class="vinfo">
-      <div class="vtitle" id="vTitle">—</div>
-      <div class="vmeta">
-        <span id="mB">—</span><span id="mS">—</span><span id="mC">—</span>
-      </div>
-      <div class="vacts">
-        <button class="vab" id="wBtn" onclick="toggleWatched()">☐ Mark Watched</button>
-        <button class="vab" onclick="addBm()">🔖 Bookmark</button>
-        <button class="vab" onclick="openNotes()">📎 Notes</button>
-        <button class="vab" onclick="shareVid()">🔗 Share</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SIDE COLUMN -->
-  <div class="scol" id="sCol">
-    <div class="ptabs">
-      <div class="ptab on" onclick="switchPnl('lectures',this)">📚 Lectures</div>
-      <div class="ptab" onclick="switchPnl('bookmarks',this)">🔖 Marks</div>
-      <div class="ptab" onclick="switchPnl('pomodoro',this)">⏰ Timer</div>
-    </div>
-    <div class="pbody">
-      <div class="pnl on" id="pnl-lectures"><div id="lecList"></div></div>
-      <div class="pnl" id="pnl-bookmarks">
-        <div id="bmList"></div>
-        <div id="bmEmpty" style="text-align:center;padding:40px 16px;color:var(--text3);">
-          <div style="font-size:2rem;margin-bottom:8px;">🔖</div>
-          <div style="font-size:0.82rem;">Koi interesting part mile toh bookmark karo</div>
-        </div>
-      </div>
-      <div class="pnl" id="pnl-pomodoro">
-        <div class="pomowrap">
-          <div class="pomoring">
-            <svg viewBox="0 0 130 130" width="130" height="130">
-              <circle class="pr-bg" cx="65" cy="65" r="55"/>
-              <circle class="pr-fill" cx="65" cy="65" r="55" id="pomoC"
-                stroke-dasharray="345.4" stroke-dashoffset="0"/>
-            </svg>
-            <div class="pomoin">
-              <div class="big" id="pomoD">25:00</div>
-              <div class="lbl" id="pomoL">FOCUS</div>
-            </div>
-          </div>
-          <div class="pomops">
-            <button class="ppb on" onclick="setPomo(25,'FOCUS',this)">25m</button>
-            <button class="ppb" onclick="setPomo(5,'BREAK',this)">5m</button>
-            <button class="ppb" onclick="setPomo(15,'LONG',this)">15m</button>
-          </div>
-          <div class="pomoc">
-            <button class="pcb go" id="pomoBtn" onclick="togPomo()">▶ Start</button>
-            <button class="pcb" onclick="resetPomo()">↺ Reset</button>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ Your Smart Study Partner</div>
+  <h1>Padho Smart,<br/><span class="highlight">Badho Fast</span> 🚀</h1>
+  <p>Telegram-powered lectures, organized perfectly.<br/>Apna batch select karo aur padhna shuru karo.</p>
+  <div class="search-bar">
+    <input type="text" placeholder="Koi bhi subject, chapter dhundho..." id="searchInput" oninput="filterContent()"/>
+    <button class="search-btn">🔍 Dhundho</button>
   </div>
 </div>
+
+<!-- STATS -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-chip"><span class="num" id="totalBatches">—</span><span class="lbl">Batches</span></div>
+  <div class="stat-chip"><span class="num" id="totalSubjects">—</span><span class="lbl">Subjects</span></div>
+  <div class="stat-chip"><span class="num" id="totalLectures">—</span><span class="lbl">Lectures</span></div>
+  <div class="stat-chip"><span class="num" id="watchedCount">0</span><span class="lbl">Watched</span></div>
+</div>
+
+<!-- CONTINUE WATCHING -->
+<div class="section" id="continueSection" style="display:none;">
+  <div class="section-header">
+    <div class="section-title"><span class="dot"></span> Jahan Choda Tha</div>
+    <span class="see-all" onclick="clearHistory()">Clear</span>
+  </div>
+  <div class="continue-list" id="continueList"></div>
+</div>
+
+<!-- BATCHES & SUBJECTS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title"><span class="dot"></span> Apna Batch Chuno</div>
+  </div>
+  <div class="batch-tabs" id="batchTabs"></div>
+
+  <div class="section-header" style="margin-bottom:20px;">
+    <div class="section-title"><span class="dot"></span> Subjects</div>
+  </div>
+  <div class="subjects-grid" id="subjectsGrid">
+    <!-- Skeletons -->
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Made with 💜 for students · <strong>AMIGOPEDIA</strong> · Powered by Telegram
+</footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
-//  ⚙️  CONFIG — yahan apne server URLs daalo
-// ══════════════════════════════════════════════════════════
-const SRV = {
-  railway: 'https://amigo-backend-production.up.railway.app',  // Primary — always ON
-  render:  ''   // Render setup nahi hua — empty rakho
+// ─── CONFIG ───────────────────────────────────────────────
+const BACKEND = 'https://amigo-backend-production.up.railway.app'; // apna backend URL
+const DATA_URL = 'data.json'; // GitHub Pages pe stored content
+
+// ─── SUBJECT ICONS & COLORS ───────────────────────────────
+const ICONS = {
+  'physics':'⚛️','chemistry':'🧪','maths':'📐','math':'📐',
+  'biology':'🧬','english':'📖','hindi':'📝','history':'🏛️',
+  'geography':'🌍','computer':'💻','science':'🔬',
+  'economics':'📊','default':'📚'
 };
-const DATA_URL = 'data.json';
+const COLORS = [
+  'linear-gradient(135deg,#6c63ff,#a78bfa)',
+  'linear-gradient(135deg,#f472b6,#fb923c)',
+  'linear-gradient(135deg,#34d399,#06b6d4)',
+  'linear-gradient(135deg,#fbbf24,#f87171)',
+  'linear-gradient(135deg,#818cf8,#38bdf8)',
+  'linear-gradient(135deg,#e879f9,#6366f1)',
+];
 
-// ══════════════════════════════════════════════════════════
-//  URL PARAMS
-// ══════════════════════════════════════════════════════════
-const QP    = new URLSearchParams(location.search);
-const VID   = QP.get('id');
-const BATCH = dec(QP.get('batch'));
-const SUBJ  = dec(QP.get('subject'));
-const CHAP  = dec(QP.get('chapter'));
-const TTL   = dec(QP.get('title'));
-const LECNO = dec(QP.get('lec'));
-const NOTES = QP.get('notes')||'';
-const TOTAL = +( QP.get('total')||0 );
-const IDX   = +( QP.get('idx')  ||0 );
+// ─── STATE ────────────────────────────────────────────────
+let contentData = {};
+let activeBatch = null;
+let progress = JSON.parse(localStorage.getItem('ap_progress') || '{}');
+let history = JSON.parse(localStorage.getItem('ap_history') || '[]');
+let streak = parseInt(localStorage.getItem('ap_streak') || '0');
 
-// ══════════════════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════════════════
-let vid, prog, bmarks, chLecs = [];
-let watched    = false;
-let activeSrv  = 'railway';  // current server
-let renderUp   = false;      // kya render jag gaya
-let renderPing = false;      // ping in progress
-let swPending  = false;      // seamless switch ready
-let anTimer = null, anSec = 5;
-let pomoInt = null, pomoS = 1500, pomoTot = 1500, pomoOn = false;
-
-// ══════════════════════════════════════════════════════════
-//  BOOT
-// ══════════════════════════════════════════════════════════
+// ─── INIT ─────────────────────────────────────────────────
 window.onload = async () => {
-  vid   = document.getElementById('vid');
-  prog  = JSON.parse(localStorage.getItem('ap_prog') ||'{}');
-  bmarks= JSON.parse(localStorage.getItem('ap_bm_'+VID)||'[]');
-  setupUI();
-  setupVidEvents();
-  setupTouch();
-  setupDrag();
-  await loadData();
-  startVideo();           // ← Railway se immediately shuru
-  wakeRenderBg();         // ← Background mein Render jagao (silent)
-  renderBmarks();
-  checkWatched();
+  updateStreak();
+  await loadContent();
+  setTimeout(() => {
+    document.getElementById('loader').style.opacity = '0';
+    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+  }, 1500);
 };
 
-// ══════════════════════════════════════════════════════════
-//  1️⃣  RAILWAY SE IMMEDIATELY STREAM SHURU KARO
-// ══════════════════════════════════════════════════════════
-async function startVideo() {
-  activeSrv = 'railway';
-
-  // Pehle check karo video exist karta hai
+async function loadContent() {
   try {
-    showBuf('Connecting to server...', '');
-    const check = await fetch(`${SRV.railway}/health`);
-    if (!check.ok) throw new Error('Server down');
-    hideBuf();
-  } catch(e) {
-    showBuf('Server se connect nahi hua', 'Retry ho raha hai...');
-    setTimeout(startVideo, 3000);
-    return;
-  }
-
-  const streamUrl = `${SRV.railway}/stream/direct/${VID}`;
-  console.log('Stream URL:', streamUrl);
-  vid.src = streamUrl;
-  vid.load();
-  resumePos();
-}
-
-// ══════════════════════════════════════════════════════════
-//  2️⃣  BACKGROUND MEIN RENDER JAGAO — STUDENT KO PATA NA CHALE
-// ══════════════════════════════════════════════════════════
-async function wakeRenderBg() {
-  // Render URL nahi hai toh skip karo
-  if (!SRV.render) { console.log("Render disabled"); return; }
-  if (renderPing || renderUp) return;
-  renderPing = true;
-  // Try every 6 seconds, upto 90 seconds total
-  for (let i = 0; i < 15; i++) {
+    const res = await fetch(DATA_URL);
+    if(!res.ok) throw new Error('Local data not found, trying backend');
+    contentData = await res.json();
+  } catch {
     try {
-      const r = await fetch(`${SRV.render}/health`, {
-        signal: AbortSignal.timeout(5000)
-      });
-      if (r.ok) {
-        renderUp   = true;
-        renderPing = false;
-        swPending  = true;  // Ab switch karne ke liye ready
-        console.log(`✅ Render awake after ${(i+1)*6}s`);
-        return;
-      }
-    } catch {}
-    await wait(6000);
+      const res = await fetch(`${BACKEND}/content`);
+      contentData = await res.json();
+    } catch {
+      contentData = getDemoData();
+      showToast('⚠️ Demo mode — Backend connect nahi hua', 4000);
+    }
   }
-  renderPing = false;
-  console.warn('Render ne respond nahi kiya — Railway chalti rahegi');
+  renderAll();
 }
 
-// ══════════════════════════════════════════════════════════
-//  3️⃣  SEAMLESS SWITCH — VIDEO RUKE NAHI, STUDENT KO PATA NA CHALE
-//
-//  Switch kab hogi:
-//   - Video pause ho (switch + resume)
-//   - Video buffer ho (switch at same position)
-//   - Chapter khatam ho (next chapter render se)
-// ══════════════════════════════════════════════════════════
-function doSilentSwitch() {
-  if (!SRV.render || !swPending || !renderUp || activeSrv === 'render') return;
-  swPending = false;
-
-  const pos      = vid.currentTime;
-  const wasPaused= vid.paused;
-
-  // Silently swap
-  activeSrv = 'render';
-  vid.src   = `${SRV.render}/stream/direct/${VID}`;
-  vid.load();
-  vid.currentTime = pos;
-  if (!wasPaused) vid.play().catch(()=>{});
-
-  // Sirf 2 second ke liye ek subtle indicator dikhao
-  showSrvBar('p','🟣 Backup server active', true);
-  setTimeout(hideSrvBar, 2500);
-
-  console.log(`🔄 Switched Railway→Render at ${ft(pos)}`);
-}
-
-// ══════════════════════════════════════════════════════════
-//  VIDEO EVENTS
-// ══════════════════════════════════════════════════════════
-function setupVidEvents() {
-  vid.addEventListener('timeupdate', onTime);
-  vid.addEventListener('ended', onEnded);
-  vid.addEventListener('waiting', () => {
-    showBuf('Buffering...','');
-    // Buffer hote waqt switch karo agar ready hai
-    if (swPending && renderUp) doSilentSwitch();
-  });
-  vid.addEventListener('playing', hideBuf);
-  vid.addEventListener('canplay', hideBuf);
-  vid.addEventListener('pause', () => {
-    document.getElementById('playBtn').textContent='▶';
-    document.getElementById('vWrap').classList.add('sc');
-    // Pause pe switch karo
-    if (swPending && renderUp) doSilentSwitch();
-  });
-  vid.addEventListener('play', () => {
-    document.getElementById('playBtn').textContent='⏸';
-    document.getElementById('vWrap').classList.remove('sc');
-  });
-  vid.addEventListener('error', onVidErr);
-  vid.addEventListener('click', togglePlay);
-  document.addEventListener('keydown', handleKey);
-}
-
-function onVidErr() {
-  if (activeSrv === 'railway') {
-    if (renderUp) {
-      doSilentSwitch();
-    } else {
-      // Render abhi bhi so raha hai — wait karo
-      showBuf('Connecting...','');
-      showSrvBar('y','⏳ Backup server jag raha hai...', true);
-      // Render ke jagने ka wait karo
-      const waitRender = setInterval(() => {
-        if (renderUp) {
-          clearInterval(waitRender);
-          doSilentSwitch();
-          hideSrvBar();
+function getDemoData() {
+  return {
+    batches: {
+      "SIGMA 8.0": {
+        subjects: {
+          "Physics": { teacher: "Alakh Pandey", chapters: {"Mechanics":{ lectures:[{lec_no:"L-01",title:"Newton's Laws",video_id:1001,notes_id:1}] }} },
+          "Chemistry": { teacher: "Pradeep Dahiya", chapters: {"Organic":{ lectures:[{lec_no:"L-01",title:"Carbon Compounds",video_id:1002,notes_id:2}] }} },
+          "Mathematics": { teacher: "NV Sir", chapters: {"Calculus":{ lectures:[{lec_no:"L-01",title:"Limits",video_id:1003,notes_id:3}] }} },
+          "Biology": { teacher: "Garima Goel", chapters: {"Cell":{ lectures:[{lec_no:"L-01",title:"Cell Structure",video_id:1004,notes_id:4}] }} }
         }
-      }, 1000);
-      // Timeout after 90s
-      setTimeout(() => {
-        clearInterval(waitRender);
-        hideBuf();
-        showToast('⚠️ Server se connect nahi hua. Refresh karo.');
-      }, 90000);
+      },
+      "ALPHA 3.0": {
+        subjects: {
+          "Physics": { teacher: "HC Verma", chapters: {"Electrostatics":{ lectures:[{lec_no:"L-01",title:"Coulomb's Law",video_id:2001,notes_id:5}] }} },
+          "Maths": { teacher: "RD Sharma", chapters: {"Algebra":{ lectures:[{lec_no:"L-01",title:"Quadratic Eq",video_id:2002,notes_id:6}] }} }
+        }
+      }
     }
-  }
-}
-
-function onTime() {
-  if (!vid.duration) return;
-  const p = (vid.currentTime/vid.duration)*100;
-  document.getElementById('pgP').style.width  = p+'%';
-  document.getElementById('pgT').style.left   = p+'%';
-  document.getElementById('ttime').textContent = `${ft(vid.currentTime)} / ${ft(vid.duration)}`;
-  if (Math.floor(vid.currentTime)%5===0) {
-    localStorage.setItem('ap_pos_'+VID, vid.currentTime);
-    prog[VID] = Math.round(p);
-    localStorage.setItem('ap_prog', JSON.stringify(prog));
-  }
-  if (p>=80 && !watched) markWatched();
-}
-
-function onEnded() {
-  if (IDX < TOTAL-1) startAN();
-}
-
-function resumePos() {
-  const s = parseFloat(localStorage.getItem('ap_pos_'+VID)||'0');
-  if (s>10) {
-    vid.addEventListener('loadedmetadata', ()=>{
-      vid.currentTime=s;
-      showToast(`▶ ${ft(s)} se resume`);
-    },{once:true});
-  }
-}
-
-// ══════════════════════════════════════════════════════════
-//  CONTROLS
-// ══════════════════════════════════════════════════════════
-function togglePlay(){ vid.paused?vid.play():vid.pause(); }
-function seekBy(s){
-  vid.currentTime=Math.max(0,Math.min(vid.duration||0,vid.currentTime+s));
-  const el=document.getElementById(s<0?'sfL':'sfR');
-  el.textContent=s<0?`⏪ ${Math.abs(s)}s`:`⏩ +${s}s`;
-  el.classList.add('vis'); setTimeout(()=>el.classList.remove('vis'),800);
-}
-function toggleMute(){ vid.muted=!vid.muted; document.getElementById('muteBtn').textContent=vid.muted?'🔇':'🔊'; }
-function setVol(v){ vid.volume=v; }
-function setSpd(s){
-  vid.playbackRate=s;
-  document.getElementById('spdBtn').textContent=s+'×';
-  document.querySelectorAll('.so').forEach(o=>o.classList.toggle('cur',parseFloat(o.textContent)===s));
-  document.getElementById('spdMenu').classList.remove('op');
-  showToast(`🎬 ${s}×`);
-}
-function toggleSpd(){ document.getElementById('spdMenu').classList.toggle('op'); }
-function togglePIP(){ document.pictureInPictureElement?document.exitPictureInPicture():vid.requestPictureInPicture?.(); }
-function toggleFS(){ !document.fullscreenElement?document.getElementById('vWrap').requestFullscreen():document.exitFullscreen(); }
-
-function handleKey(e){
-  if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
-  ({Space:()=>{e.preventDefault();togglePlay();},
-    ArrowLeft:()=>seekBy(-10),ArrowRight:()=>seekBy(10),
-    ArrowUp:()=>{e.preventDefault();vid.volume=Math.min(1,vid.volume+0.1);},
-    ArrowDown:()=>{e.preventDefault();vid.volume=Math.max(0,vid.volume-0.1);},
-    KeyF:toggleFS,KeyM:toggleMute})[e.code]?.();
-}
-
-function setupDrag(){
-  const a=document.getElementById('pgArea'); let d=false;
-  const seek=e=>{
-    const r=a.getBoundingClientRect();
-    const p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-    vid.currentTime=p*(vid.duration||0);
   };
-  a.addEventListener('click',seek);
-  a.addEventListener('mousedown',()=>d=true);
-  document.addEventListener('mousemove',e=>{if(d)seek(e);});
-  document.addEventListener('mouseup',()=>d=false);
 }
 
-// ══════════════════════════════════════════════════════════
-//  TOUCH (double-tap + swipe volume)
-// ══════════════════════════════════════════════════════════
-function setupTouch(){
-  const w=document.getElementById('vWrap');
-  let ts=null,tv=1,ly=0;
-  w.addEventListener('touchstart',e=>{
-    ts={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
-    tv=vid.volume; ly=e.touches[0].clientY;
-  },{passive:true});
-  w.addEventListener('touchend',e=>{
-    if(!ts) return;
-    const dx=e.changedTouches[0].clientX-ts.x;
-    const dy=e.changedTouches[0].clientY-ts.y;
-    if(Math.abs(dx)<20&&Math.abs(dy)<20&&Date.now()-ts.t<300){
-      const x=ts.x,W=w.offsetWidth;
-      if(x<W/3) seekBy(-10);
-      else if(x>W*2/3) seekBy(10);
-      else togglePlay();
-    }
-    ts=null;
-  },{passive:true});
-  w.addEventListener('touchmove',e=>{
-    if(!ts) return;
-    const dy=e.touches[0].clientY-ly;
-    if(ts.x>w.offsetWidth/2) vid.volume=Math.max(0,Math.min(1,vid.volume-dy/200));
-    ly=e.touches[0].clientY;
-  },{passive:true});
+// ─── RENDER ───────────────────────────────────────────────
+function renderAll() {
+  const batches = Object.keys(contentData.batches || {});
+  if(!batches.length) return;
+
+  // Stats
+  let totalSub=0, totalLec=0;
+  batches.forEach(b => {
+    const subs = Object.keys(contentData.batches[b].subjects || {});
+    totalSub += subs.length;
+    subs.forEach(s => {
+      const chaps = Object.values(contentData.batches[b].subjects[s].chapters || {});
+      chaps.forEach(c => totalLec += (c.lectures||[]).length);
+    });
+  });
+  document.getElementById('totalBatches').textContent = batches.length;
+  document.getElementById('totalSubjects').textContent = totalSub;
+  document.getElementById('totalLectures').textContent = totalLec;
+  document.getElementById('watchedCount').textContent = Object.keys(progress).filter(k=>progress[k]===100).length;
+
+  // Batch tabs
+  activeBatch = batches[0];
+  const tabs = document.getElementById('batchTabs');
+  tabs.innerHTML = batches.map((b,i) =>
+    `<button class="batch-tab ${i===0?'active':''}" onclick="selectBatch('${b}',this)">${b}</button>`
+  ).join('');
+
+  renderSubjects();
+  renderContinue();
 }
 
-// ══════════════════════════════════════════════════════════
-//  WATCHED & BOOKMARKS
-// ══════════════════════════════════════════════════════════
-function checkWatched(){ watched=prog[VID]>=80; updWBtn(); }
-function toggleWatched(){
-  watched=!watched;
-  prog[VID]=watched?100:0;
-  localStorage.setItem('ap_prog',JSON.stringify(prog));
-  updWBtn();
-  showToast(watched?'✅ Watched!':'☐ Unwatched');
-  if(watched) confetti();
-}
-function markWatched(){
-  watched=true; prog[VID]=100;
-  localStorage.setItem('ap_prog',JSON.stringify(prog));
-  updWBtn(); showToast('🎉 Lecture complete!'); confetti();
-}
-function updWBtn(){
-  const b=document.getElementById('wBtn');
-  if(watched){b.textContent='✅ Watched';b.classList.add('on');}
-  else{b.textContent='☐ Mark Watched';b.classList.remove('on');}
+function selectBatch(name, el) {
+  activeBatch = name;
+  document.querySelectorAll('.batch-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderSubjects();
 }
 
-function addBm(){
-  if(!vid.duration){showToast('⚠️ Video pehle chalao');return;}
-  const n=prompt('Note (khali chhod sakte ho):')||'';
-  bmarks.push({time:vid.currentTime,note:n,id:Date.now()});
-  bmarks.sort((a,b)=>a.time-b.time);
-  localStorage.setItem('ap_bm_'+VID,JSON.stringify(bmarks));
-  renderBmarks();
-  showToast(`🔖 ${ft(vid.currentTime)} pe bookmark!`);
-}
-function renderBmarks(){
-  const l=document.getElementById('bmList');
-  const e=document.getElementById('bmEmpty');
-  if(!bmarks.length){l.innerHTML='';e.style.display='block';return;}
-  e.style.display='none';
-  l.innerHTML=bmarks.map(b=>`
-    <div class="bmi" onclick="vid.currentTime=${b.time};vid.play()">
-      <div class="bmt">${ft(b.time)}</div>
-      <div class="bmn">${b.note||'Bookmark'}</div>
-      <div class="bmx" onclick="event.stopPropagation();delBm(${b.id})">✕</div>
-    </div>`).join('');
-}
-function delBm(id){
-  bmarks=bmarks.filter(b=>b.id!==id);
-  localStorage.setItem('ap_bm_'+VID,JSON.stringify(bmarks));
-  renderBmarks();
-}
+function renderSubjects() {
+  const grid = document.getElementById('subjectsGrid');
+  const batch = contentData.batches[activeBatch];
+  if(!batch) { grid.innerHTML = '<div style="color:var(--text3);padding:20px;">Koi data nahi mila</div>'; return; }
 
-// ══════════════════════════════════════════════════════════
-//  LECTURE LIST
-// ══════════════════════════════════════════════════════════
-async function loadData(){
-  let data={};
-  try{ const r=await fetch(DATA_URL); data=await r.json(); }
-  catch{ try{ const r=await fetch(`${SRV.railway}/content`); data=await r.json(); }catch{} }
-  chLecs=data.batches?.[BATCH]?.subjects?.[SUBJ]?.chapters?.[CHAP]?.lectures||[];
-  renderLecs();
-}
-function renderLecs(){
-  document.getElementById('lecList').innerHTML=chLecs.map((l,i)=>{
-    const cur=String(l.video_id)===String(VID);
-    const dn=prog[l.video_id]>=80;
-    const url=`video.html?id=${l.video_id}&batch=${enc(BATCH)}&subject=${enc(SUBJ)}&chapter=${enc(CHAP)}&title=${enc(l.title)}&lec=${enc(l.lec_no)}&notes=${l.notes_id||''}&total=${chLecs.length}&idx=${i}`;
-    return `<a class="slec ${cur?'cur':''} ${dn&&!cur?'done':''}" href="${url}">
-      <div class="snum">${dn&&!cur?'✓':l.lec_no||i+1}</div>
-      <div class="sit"><div class="st">${l.title}</div><div class="sm">${l.duration||''}</div></div>
+  const subjects = Object.entries(batch.subjects || {});
+  grid.innerHTML = subjects.map(([name, data], i) => {
+    const key = name.toLowerCase();
+    const icon = ICONS[key] || ICONS['default'];
+    const color = COLORS[i % COLORS.length];
+    const chapCount = Object.keys(data.chapters||{}).length;
+    const lecCount = Object.values(data.chapters||{}).reduce((a,c)=>a+(c.lectures||[]).length,0);
+    const prog = getSubjectProgress(activeBatch, name, data);
+    const circumference = 2 * Math.PI * 16;
+    const offset = circumference - (prog/100) * circumference;
+
+    return `
+    <a class="subject-card" href="player.html?batch=${encodeURIComponent(activeBatch)}&subject=${encodeURIComponent(name)}" onclick="saveLastVisit('${activeBatch}','${name}')">
+      <div class="card-accent-line" style="background:${color}"></div>
+      <span class="icon">${icon}</span>
+      <div class="subject-name">${name}</div>
+      <div class="teacher">👨‍🏫 ${data.teacher||'Teacher'}</div>
+      <div class="meta">
+        <div class="chapters">📚 ${chapCount} ch · 🎬 ${lecCount} lec</div>
+        <div class="progress-ring">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle class="bg" cx="20" cy="20" r="16"/>
+            <circle class="fill" cx="20" cy="20" r="16"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"
+              stroke="${color.includes('6c63ff')?'#6c63ff':'#f472b6'}"/>
+          </svg>
+          <div class="pct">${Math.round(prog)}%</div>
+        </div>
+      </div>
     </a>`;
   }).join('');
 }
 
-// ══════════════════════════════════════════════════════════
-//  AUTO NEXT
-// ══════════════════════════════════════════════════════════
-function startAN(){
-  const nx=chLecs[IDX+1]; if(!nx) return;
-  document.getElementById('anTitle').textContent=nx.title;
-  document.getElementById('anWrap').classList.add('vis');
-  anSec=5;
-  const f=document.getElementById('anFill');
-  f.style.transition='none'; f.style.width='100%';
-  setTimeout(()=>{ f.style.transition='width 5s linear'; f.style.width='0%'; },50);
-  const tick=()=>{ anSec--; document.getElementById('anCnt').textContent=`${anSec}s`;
-    if(anSec<=0) goNext(); else anTimer=setTimeout(tick,1000); };
-  anTimer=setTimeout(tick,1000);
-}
-function goNext(){
-  clearTimeout(anTimer);
-  const nx=chLecs[IDX+1]; if(!nx) return;
-  location.href=`video.html?id=${nx.video_id}&batch=${enc(BATCH)}&subject=${enc(SUBJ)}&chapter=${enc(CHAP)}&title=${enc(nx.title)}&lec=${enc(nx.lec_no)}&notes=${nx.notes_id||''}&total=${TOTAL}&idx=${IDX+1}`;
-}
-function cancelAN(){ clearTimeout(anTimer); document.getElementById('anWrap').classList.remove('vis'); }
+function renderContinue() {
+  if(!history.length) return;
+  const sec = document.getElementById('continueSection');
+  const list = document.getElementById('continueList');
+  sec.style.display = 'block';
 
-function openNotes(){
-  if(!NOTES){showToast('⚠️ Is lecture ke notes nahi hain');return;}
-  window.open(`${SRV[activeSrv]}/notes/${NOTES}`,'_blank');
-}
-function shareVid(){
-  if(navigator.share) navigator.share({title:TTL,url:location.href});
-  else{ navigator.clipboard.writeText(location.href); showToast('🔗 Link copy ho gaya!'); }
+  list.innerHTML = history.slice(0,3).map(item => {
+    const prog = progress[item.videoId] || 0;
+    return `
+    <a class="continue-item" href="video.html?id=${item.videoId}&batch=${encodeURIComponent(item.batch)}&subject=${encodeURIComponent(item.subject)}&title=${encodeURIComponent(item.title)}">
+      <div class="continue-thumb">${ICONS[item.subject?.toLowerCase()]||'📚'}</div>
+      <div class="continue-info">
+        <div class="lec-title">${item.title}</div>
+        <div class="lec-sub">${item.batch} · ${item.subject}</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${prog}%"></div></div>
+      </div>
+      <div class="continue-play">▶</div>
+    </a>`;
+  }).join('');
 }
 
-// ══════════════════════════════════════════════════════════
-//  POMODORO
-// ══════════════════════════════════════════════════════════
-function setPomo(m,l,el){
-  pomoS=m*60; pomoTot=m*60; pomoOn=false; clearInterval(pomoInt);
-  document.getElementById('pomoBtn').textContent='▶ Start';
-  document.getElementById('pomoL').textContent=l;
-  document.querySelectorAll('.ppb').forEach(b=>b.classList.remove('on'));
-  el?.classList.add('on'); updPomo();
-}
-function togPomo(){
-  if(pomoOn){ pomoOn=false; clearInterval(pomoInt); document.getElementById('pomoBtn').textContent='▶ Start'; }
-  else{ pomoOn=true; document.getElementById('pomoBtn').textContent='⏸ Pause';
-    pomoInt=setInterval(()=>{ pomoS--; updPomo();
-      if(pomoS<=0){ clearInterval(pomoInt); pomoOn=false;
-        document.getElementById('pomoBtn').textContent='▶ Start';
-        showToast('🍅 Pomodoro done! Break lo!'); confetti(); }
-    },1000); }
-}
-function resetPomo(){ clearInterval(pomoInt); pomoOn=false; pomoS=pomoTot; document.getElementById('pomoBtn').textContent='▶ Start'; updPomo(); }
-function updPomo(){
-  document.getElementById('pomoD').textContent=`${pad(~~(pomoS/60))}:${pad(pomoS%60)}`;
-  document.getElementById('pomoC').style.strokeDashoffset=(1-pomoS/pomoTot)*345.4;
+// ─── PROGRESS ─────────────────────────────────────────────
+function getSubjectProgress(batch, subject, data) {
+  let total=0, watched=0;
+  Object.values(data.chapters||{}).forEach(ch => {
+    (ch.lectures||[]).forEach(lec => {
+      total++;
+      if(progress[lec.video_id] >= 80) watched++;
+    });
+  });
+  return total ? (watched/total)*100 : 0;
 }
 
-// ══════════════════════════════════════════════════════════
-//  PANELS
-// ══════════════════════════════════════════════════════════
-function switchPnl(n,el){
-  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
-  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
-  el?.classList.add('on'); document.getElementById('pnl-'+n).classList.add('on');
-}
-function openPanel(n){
-  document.getElementById('sCol').classList.add('vis');
-  const tab=[...document.querySelectorAll('.ptab')].find(t=>t.textContent.toLowerCase().includes(n.slice(0,3)));
-  switchPnl(n,tab);
-}
-function toggleSide(){ document.getElementById('sCol').classList.toggle('vis'); }
-
-// ══════════════════════════════════════════════════════════
-//  SERVER BAR
-// ══════════════════════════════════════════════════════════
-function showSrvBar(dot,lbl,vis){
-  const b=document.getElementById('srvBar');
-  document.getElementById('sDot').className='s-dot '+dot;
-  document.getElementById('srvLabel').textContent=lbl;
-  b.style.display=vis?'flex':'none';
-  b.classList.toggle('vis',vis);
-}
-function hideSrvBar(){ document.getElementById('srvBar').style.display='none'; }
-
-// ══════════════════════════════════════════════════════════
-//  BUFFER
-// ══════════════════════════════════════════════════════════
-function showBuf(t,s){
-  document.getElementById('bufT').textContent=t;
-  document.getElementById('bufS').textContent=s;
-  document.getElementById('buf').classList.add('vis');
-}
-function hideBuf(){ document.getElementById('buf').classList.remove('vis'); }
-
-// ══════════════════════════════════════════════════════════
-//  UI SETUP
-// ══════════════════════════════════════════════════════════
-function setupUI(){
-  document.title=`${TTL} — AMIGOPEDIA`;
-  document.getElementById('navTitle').textContent=TTL;
-  document.getElementById('vTitle').textContent=TTL;
-  document.getElementById('mB').textContent=BATCH;
-  document.getElementById('mS').textContent=SUBJ;
-  document.getElementById('mC').textContent=CHAP;
-  document.getElementById('backBtn').href=`player.html?batch=${enc(BATCH)}&subject=${enc(SUBJ)}`;
-}
-
-// ══════════════════════════════════════════════════════════
-//  CONFETTI
-// ══════════════════════════════════════════════════════════
-function confetti(){
-  const c=['#6c63ff','#f472b6','#34d399','#fbbf24','#a78bfa'];
-  for(let i=0;i<50;i++){
-    const e=document.createElement('div');
-    e.className='cfp';
-    e.style.cssText=`left:${Math.random()*100}vw;top:-10px;
-      background:${c[~~(Math.random()*c.length)]};
-      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
-      border-radius:${Math.random()>.5?'50%':'2px'};
-      animation-delay:${Math.random()}s;animation-duration:${2+Math.random()*2}s;`;
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),4000);
+// ─── SEARCH ───────────────────────────────────────────────
+function filterContent() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  if(!q) { renderSubjects(); return; }
+  const grid = document.getElementById('subjectsGrid');
+  const batch = contentData.batches[activeBatch];
+  if(!batch) return;
+  const subjects = Object.entries(batch.subjects||{}).filter(([n])=>n.toLowerCase().includes(q));
+  if(!subjects.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:40px;">🔍 "${q}" nahi mila</div>`;
+    return;
   }
+  // Re-render with filtered
+  const orig = Object.entries(batch.subjects||{});
+  grid.innerHTML = orig.filter(([n])=>n.toLowerCase().includes(q)).map(([n,d],i)=>{
+    return buildSubjectCard(n,d,activeBatch,i);
+  }).join('');
 }
 
-// ══════════════════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════════════════
-function ft(s){ if(!s||isNaN(s))return'0:00';const h=~~(s/3600),m=~~((s%3600)/60),sec=~~(s%60);return h?`${h}:${pad(m)}:${pad(sec)}`:`${m}:${pad(sec)}`; }
-function pad(n){ return String(n).padStart(2,'0'); }
-function enc(s){ return encodeURIComponent(s||''); }
-function dec(s){ try{return decodeURIComponent(s||'');}catch{return s||'';} }
-function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function buildSubjectCard(name,data,batch,i) {
+  const key=name.toLowerCase();
+  const icon=ICONS[key]||ICONS['default'];
+  const color=COLORS[i%COLORS.length];
+  const chapCount=Object.keys(data.chapters||{}).length;
+  const lecCount=Object.values(data.chapters||{}).reduce((a,c)=>a+(c.lectures||[]).length,0);
+  const prog=getSubjectProgress(batch,name,data);
+  const circumference=2*Math.PI*16;
+  const offset=circumference-(prog/100)*circumference;
+  return `<a class="subject-card" href="player.html?batch=${encodeURIComponent(batch)}&subject=${encodeURIComponent(name)}">
+    <div class="card-accent-line" style="background:${color}"></div>
+    <span class="icon">${icon}</span>
+    <div class="subject-name">${name}</div>
+    <div class="teacher">👨‍🏫 ${data.teacher||'Teacher'}</div>
+    <div class="meta">
+      <div class="chapters">📚 ${chapCount} ch · 🎬 ${lecCount} lec</div>
+      <div class="progress-ring">
+        <svg viewBox="0 0 40 40" width="40" height="40">
+          <circle class="bg" cx="20" cy="20" r="16"/>
+          <circle class="fill" cx="20" cy="20" r="16"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke="#6c63ff"/>
+        </svg>
+        <div class="pct">${Math.round(prog)}%</div>
+      </div>
+    </div>
+  </a>`;
+}
 
-function showToast(msg,dur=3000){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('vis');
-  setTimeout(()=>t.classList.remove('vis'),dur);
+// ─── UTILITIES ────────────────────────────────────────────
+function saveLastVisit(batch, subject) {
+  // stored in player.html navigation
 }
-function toggleTheme(){
-  const h=document.documentElement;
-  const d=h.getAttribute('data-theme')==='dark';
-  h.setAttribute('data-theme',d?'light':'dark');
-  localStorage.setItem('ap_theme',d?'light':'dark');
+
+function clearHistory() {
+  history = [];
+  localStorage.setItem('ap_history','[]');
+  document.getElementById('continueSection').style.display='none';
 }
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#spdBtn')&&!e.target.closest('#spdMenu'))
-    document.getElementById('spdMenu').classList.remove('op');
-});
-const th=localStorage.getItem('ap_theme');
-if(th) document.documentElement.setAttribute('data-theme',th);
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastVisit = localStorage.getItem('ap_lastVisit');
+  if(lastVisit !== today) {
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+    if(lastVisit === yesterday) streak++;
+    else if(lastVisit !== today) streak = 1;
+    localStorage.setItem('ap_lastVisit', today);
+    localStorage.setItem('ap_streak', streak);
+  }
+  document.getElementById('streakCount').textContent = streak;
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-btn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('ap_theme', isDark ? 'light' : 'dark');
+}
+
+function showToast(msg, dur=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), dur);
+}
+
+// Apply saved theme
+const savedTheme = localStorage.getItem('ap_theme');
+if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
 </body>
 </html>
