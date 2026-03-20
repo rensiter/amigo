@@ -1,26 +1,8 @@
 {
   "batches": {
-    "Newton": {
-      "subjects": {
-        "Physics": {
-          "teacher": "Na sir",
-          "chapters": {
-            "Nlm": {
-              "lectures": [
-                {
-                  "lec_no": "L-01",
-                  "title": "5b1e4895e4b04d0741d1349e",
-                  "video_id": 13,
-                  "notes_id": null
-                }
-              ]
-            }
-          }
-        }
-      }
+    "Esral": {
+      "subjects": {}
     }
   },
-  "lecture_ids": {
-    "Nlm__1": 13
-  }
+  "lecture_ids": {}
 }
