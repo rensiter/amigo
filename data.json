@@ -4,7 +4,11 @@
       "subjects": {
         "Physics": {
           "teacher": "Na sir",
-          "chapters": {}
+          "chapters": {
+            "Nlm": {
+              "lectures": []
+            }
+          }
         }
       }
     }
