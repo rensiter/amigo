@@ -1,7 +1,12 @@
 {
   "batches": {
     "AK 12TH": {
-      "subjects": {}
+      "subjects": {
+        "MATHS": {
+          "teacher": "GB SIR",
+          "chapters": {}
+        }
+      }
     }
   },
   "lecture_ids": {}
