@@ -1,7 +1,12 @@
 {
   "batches": {
     "Newton": {
-      "subjects": {}
+      "subjects": {
+        "Physics": {
+          "teacher": "Na sir",
+          "chapters": {}
+        }
+      }
     }
   },
   "lecture_ids": {}
