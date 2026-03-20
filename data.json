@@ -9,8 +9,8 @@
               "lectures": [
                 {
                   "lec_no": "L-01",
-                  "title": "Isomerism | L-06 NJ_247",
-                  "video_id": 7,
+                  "title": "Isomerism | L-07 NJ_247",
+                  "video_id": 9,
                   "notes_id": null
                 }
               ]
@@ -21,6 +21,6 @@
     }
   },
   "lecture_ids": {
-    "ISOMERISM__1": 7
+    "ISOMERISM__1": 9
   }
 }
