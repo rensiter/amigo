@@ -1,26 +1,8 @@
 {
   "batches": {
-    "AK 11TH": {
-      "subjects": {
-        "ORGANIC ( SKM SIR )": {
-          "teacher": "SKM SIR",
-          "chapters": {
-            "ISOMERISM": {
-              "lectures": [
-                {
-                  "lec_no": "L-01",
-                  "title": "Isomerism | L-04 NJ_247",
-                  "video_id": 10,
-                  "notes_id": null
-                }
-              ]
-            }
-          }
-        }
-      }
+    "AK 12TH": {
+      "subjects": {}
     }
   },
-  "lecture_ids": {
-    "ISOMERISM__1": 10
-  }
+  "lecture_ids": {}
 }
