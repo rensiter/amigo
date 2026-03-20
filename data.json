@@ -4,7 +4,11 @@
       "subjects": {
         "I ordered": {
           "teacher": "Mw",
-          "chapters": {}
+          "chapters": {
+            "Bw": {
+              "lectures": []
+            }
+          }
         }
       }
     }
