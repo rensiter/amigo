@@ -1,33 +1,8 @@
 {
   "batches": {
-    "AK 12TH": {
-      "subjects": {
-        "MATHS": {
-          "teacher": "GB SIR",
-          "chapters": {
-            "PARABOLA": {
-              "lectures": [
-                {
-                  "lec_no": "L-01",
-                  "title": "Parabola | L-01 | Basic Of C S Terminology Standard Equ NJ_247",
-                  "video_id": 11,
-                  "notes_id": null
-                },
-                {
-                  "lec_no": "L-02",
-                  "title": "Parabola | L-02 | Question Based On Terminology NJ_247",
-                  "video_id": 12,
-                  "notes_id": null
-                }
-              ]
-            }
-          }
-        }
-      }
+    "Newton": {
+      "subjects": {}
     }
   },
-  "lecture_ids": {
-    "PARABOLA__1": 11,
-    "PARABOLA__2": 12
-  }
+  "lecture_ids": {}
 }
