@@ -6,12 +6,21 @@
           "teacher": "Mw",
           "chapters": {
             "Bw": {
-              "lectures": []
+              "lectures": [
+                {
+                  "lec_no": "L-01",
+                  "title": "5c5bd66ae4b0721aa6b60b52",
+                  "video_id": 14,
+                  "notes_id": null
+                }
+              ]
             }
           }
         }
       }
     }
   },
-  "lecture_ids": {}
+  "lecture_ids": {
+    "Bw__1": 14
+  }
 }
