@@ -12,6 +12,12 @@
                   "title": "5c5bd66ae4b0721aa6b60b52",
                   "video_id": 14,
                   "notes_id": null
+                },
+                {
+                  "lec_no": "L-02",
+                  "title": "5c5bd66ae4b0721aa6b60b52",
+                  "video_id": 15,
+                  "notes_id": null
                 }
               ]
             }
@@ -21,6 +27,7 @@
     }
   },
   "lecture_ids": {
-    "Bw__1": 14
+    "Bw__1": 14,
+    "Bw__2": 15
   }
 }
