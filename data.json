@@ -32,7 +32,12 @@
       }
     },
     "Eduniti": {
-      "subjects": {}
+      "subjects": {
+        "Jee mains 2025": {
+          "teacher": "Mohit sir",
+          "chapters": {}
+        }
+      }
     }
   },
   "lecture_ids": {
