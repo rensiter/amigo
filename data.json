@@ -37,7 +37,14 @@
           "teacher": "Mohit sir",
           "chapters": {
             "Jan": {
-              "lectures": []
+              "lectures": [
+                {
+                  "lec_no": "L-01",
+                  "title": "1 - JEE Main 2025 PYQs - Unit Dimensions Errors & Vector",
+                  "video_id": 17,
+                  "notes_id": null
+                }
+              ]
             }
           }
         }
@@ -47,6 +54,7 @@
   "lecture_ids": {
     "Bw__1": 14,
     "Bw__2": 15,
-    "Bw__3": 16
+    "Bw__3": 16,
+    "Jan__1": 17
   }
 }
