@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AMIGOPEDIA — Learn Together</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0d14;
+  --bg2: #13131f;
+  --bg3: #1a1a2e;
+  --card: #16162a;
+  --card2: #1e1e35;
+  --border: #2a2a45;
+  --accent: #6c63ff;
+  --accent2: #a78bfa;
+  --accent3: #f472b6;
+  --text: #e8e8f0;
+  --text2: #a0a0c0;
+  --text3: #6060a0;
+  --success: #34d399;
+  --warn: #fbbf24;
+  --glow: 0 0 30px rgba(108,99,255,0.3);
+}
+[data-theme="light"] {
+  --bg: #f0f0ff;
+  --bg2: #e8e8ff;
+  --bg3: #dcdcff;
+  --card: #ffffff;
+  --card2: #f5f5ff;
+  --border: #c8c8e8;
+  --text: #1a1a3e;
+  --text2: #4a4a7a;
+  --text3: #8888aa;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* NOISE TEXTURE */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ANIMATED GRADIENT MESH */
+.mesh{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.12;animation:blobFloat 8s ease-in-out infinite;}
+.mesh-blob:nth-child(1){width:600px;height:600px;background:var(--accent);top:-100px;left:-200px;animation-delay:0s;}
+.mesh-blob:nth-child(2){width:400px;height:400px;background:var(--accent3);bottom:-100px;right:-100px;animation-delay:3s;}
+.mesh-blob:nth-child(3){width:300px;height:300px;background:var(--accent2);top:50%;left:50%;animation-delay:6s;}
+@keyframes blobFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-30px) scale(1.05);}}
+
+/* NAVBAR */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,13,20,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.logo{
+  font-family:'Baloo 2',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-0.5px;
+}
+.logo span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;-webkit-text-fill-color:var(--text2);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.theme-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border);
+  cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;
+}
+.theme-btn:hover{background:var(--accent);border-color:var(--accent);}
+.streak-badge{
+  display:flex;align-items:center;gap:6px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:6px 14px;font-size:0.85rem;font-weight:700;
+}
+.streak-badge .fire{font-size:1rem;}
+
+/* HERO */
+.hero{
+  position:relative;z-index:1;
+  padding:80px 24px 40px;
+  text-align:center;
+  max-width:800px;margin:0 auto;
+}
+.hero-tag{
+  display:inline-block;
+  background:rgba(108,99,255,0.15);
+  border:1px solid rgba(108,99,255,0.3);
+  border-radius:20px;padding:6px 16px;
+  font-size:0.8rem;font-weight:700;color:var(--accent2);
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Baloo 2',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:800;line-height:1.1;
+  margin-bottom:16px;
+}
+.hero h1 .highlight{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{color:var(--text2);font-size:1.1rem;line-height:1.7;}
+.search-bar{
+  margin:32px auto 0;max-width:480px;
+  display:flex;align-items:center;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:50px;padding:6px 6px 6px 20px;
+  transition:all 0.3s;
+}
+.search-bar:focus-within{border-color:var(--accent);box-shadow:var(--glow);}
+.search-bar input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--text);font-family:'Nunito',sans-serif;font-size:0.95rem;
+}
+.search-bar input::placeholder{color:var(--text3);}
+.search-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  border:none;border-radius:40px;padding:10px 20px;
+  color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;
+  cursor:pointer;transition:all 0.3s;
+}
+.search-btn:hover{transform:scale(1.05);}
+
+/* STATS BAR */
+.stats-bar{
+  position:relative;z-index:1;
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  padding:24px 24px;max-width:900px;margin:0 auto;
+}
+.stat-chip{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:12px 20px;
+  display:flex;align-items:center;gap:10px;
+  font-size:0.85rem;
+}
+.stat-chip .num{font-weight:800;font-size:1.1rem;color:var(--accent2);}
+.stat-chip .lbl{color:var(--text2);}
+
+/* SECTION */
+.section{position:relative;z-index:1;padding:0 24px 48px;max-width:1100px;margin:0 auto;}
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;
+}
+.section-title{
+  font-family:'Baloo 2',sans-serif;font-size:1.4rem;font-weight:700;
+  display:flex;align-items:center;gap:10px;
+}
+.section-title .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  display:inline-block;
+}
+.see-all{color:var(--accent2);font-size:0.85rem;font-weight:700;text-decoration:none;cursor:pointer;}
+
+/* BATCH PILLS */
+.batch-tabs{
+  display:flex;gap:10px;flex-wrap:wrap;
+  margin-bottom:32px;
+}
+.batch-tab{
+  padding:10px 20px;border-radius:30px;
+  border:1.5px solid var(--border);
+  background:var(--card);color:var(--text2);
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;
+  cursor:pointer;transition:all 0.25s;
+  white-space:nowrap;
+}
+.batch-tab:hover{border-color:var(--accent);color:var(--accent2);}
+.batch-tab.active{
+  background:linear-gradient(135deg,var(--accent),#8b5cf6);
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 20px rgba(108,99,255,0.35);
+}
+
+/* SUBJECT CARDS */
+.subjects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:18px;
+}
+.subject-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:24px;
+  cursor:pointer;transition:all 0.3s;
+  position:relative;overflow:hidden;
+  text-decoration:none;color:inherit;
+  display:block;
+}
+.subject-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  opacity:0;transition:opacity 0.3s;
+}
+.subject-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(108,99,255,0.2);
+}
+.subject-card:hover::before{opacity:0.06;}
+.subject-card .icon{
+  font-size:2.2rem;margin-bottom:14px;
+  display:block;
+}
+.subject-card .subject-name{
+  font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.15rem;
+  margin-bottom:4px;
+}
+.subject-card .teacher{
+  font-size:0.8rem;color:var(--text3);margin-bottom:16px;
+}
+.subject-card .meta{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.subject-card .chapters{
+  font-size:0.8rem;color:var(--text2);
+  background:var(--bg3);border-radius:10px;padding:4px 10px;
+}
+.progress-ring{
+  width:40px;height:40px;position:relative;
+}
+.progress-ring svg{transform:rotate(-90deg);}
+.progress-ring .bg{stroke:var(--border);stroke-width:3;fill:none;}
+.progress-ring .fill{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round;transition:stroke-dashoffset 0.5s ease;}
+.progress-ring .pct{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;font-weight:800;color:var(--accent2);
+}
+.card-accent-line{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:20px 20px 0 0;
+}
+
+/* CONTINUE WATCHING */
+.continue-list{display:flex;flex-direction:column;gap:12px;}
+.continue-item{
+  display:flex;align-items:center;gap:16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:16px;cursor:pointer;
+  transition:all 0.25s;text-decoration:none;color:inherit;
+}
+.continue-item:hover{border-color:var(--accent);transform:translateX(4px);}
+.continue-thumb{
+  width:60px;height:60px;border-radius:12px;
+  background:var(--bg3);display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;flex-shrink:0;
+}
+.continue-info{flex:1;}
+.continue-info .lec-title{font-weight:700;font-size:0.95rem;margin-bottom:2px;}
+.continue-info .lec-sub{font-size:0.8rem;color:var(--text2);}
+.continue-info .prog-bar{
+  margin-top:8px;height:4px;background:var(--border);border-radius:4px;overflow:hidden;
+}
+.continue-info .prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:4px;}
+.continue-play{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+}
+
+/* LOADING SKELETON */
+.skeleton{
+  background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:8px;
+}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:14px 24px;
+  font-weight:600;font-size:0.9rem;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  z-index:999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  display:flex;align-items:center;gap:10px;
+  white-space:nowrap;
+}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:1;
+  text-align:center;padding:32px 24px;
+  border-top:1px solid var(--border);
+  color:var(--text3);font-size:0.85rem;
+}
+footer strong{color:var(--accent2);}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero h1{font-size:2rem;}
+  .stats-bar{gap:10px;}
+  .stat-chip{padding:10px 14px;}
+  .subjects-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* LOADING OVERLAY */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;transition:opacity 0.5s;
+}
+#loader .logo-big{
+  font-family:'Baloo 2',sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.loader-bar{
+  width:200px;height:3px;background:var(--border);border-radius:3px;overflow:hidden;
+}
+.loader-fill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));
+  border-radius:3px;animation:loadFill 1.5s ease-out forwards;
+}
+@keyframes loadFill{0%{width:0;}100%{width:100%;}}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="logo-big">AMIGOPEDIA</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div style="color:var(--text3);font-size:0.85rem;">Content load ho raha hai...</div>
+</div>
+
+<div class="mesh">
+  <div class="mesh-blob"></div>
+  <div class="mesh-blob"></div>
+  <div class="mesh-blob"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">AMIGO<span>PEDIA</span></div>
+  <div class="nav-right">
+    <div class="streak-badge"><span class="fire">🔥</span><span id="streakCount">0</span> day streak</div>
+    <button class="theme-btn" onclick="toggleTheme()" title="Theme toggle">🌙</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ Your Smart Study Partner</div>
+  <h1>Padho Smart,<br/><span class="highlight">Badho Fast</span> 🚀</h1>
+  <p>Telegram-powered lectures, organized perfectly.<br/>Apna batch select karo aur padhna shuru karo.</p>
+  <div class="search-bar">
+    <input type="text" placeholder="Koi bhi subject, chapter dhundho..." id="searchInput" oninput="filterContent()"/>
+    <button class="search-btn">🔍 Dhundho</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-chip"><span class="num" id="totalBatches">—</span><span class="lbl">Batches</span></div>
+  <div class="stat-chip"><span class="num" id="totalSubjects">—</span><span class="lbl">Subjects</span></div>
+  <div class="stat-chip"><span class="num" id="totalLectures">—</span><span class="lbl">Lectures</span></div>
+  <div class="stat-chip"><span class="num" id="watchedCount">0</span><span class="lbl">Watched</span></div>
+</div>
+
+<!-- CONTINUE WATCHING -->
+<div class="section" id="continueSection" style="display:none;">
+  <div class="section-header">
+    <div class="section-title"><span class="dot"></span> Jahan Choda Tha</div>
+    <span class="see-all" onclick="clearHistory()">Clear</span>
+  </div>
+  <div class="continue-list" id="continueList"></div>
+</div>
+
+<!-- BATCHES & SUBJECTS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title"><span class="dot"></span> Apna Batch Chuno</div>
+  </div>
+  <div class="batch-tabs" id="batchTabs"></div>
+
+  <div class="section-header" style="margin-bottom:20px;">
+    <div class="section-title"><span class="dot"></span> Subjects</div>
+  </div>
+  <div class="subjects-grid" id="subjectsGrid">
+    <!-- Skeletons -->
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+    <div class="skeleton" style="height:180px;border-radius:20px;"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Made with 💜 for students · <strong>AMIGOPEDIA</strong> · Powered by Telegram
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────
+const BACKEND = 'https://amigopedia.up.railway.app'; // apna backend URL
+const DATA_URL = 'data.json'; // GitHub Pages pe stored content
+
+// ─── SUBJECT ICONS & COLORS ───────────────────────────────
+const ICONS = {
+  'physics':'⚛️','chemistry':'🧪','maths':'📐','math':'📐',
+  'biology':'🧬','english':'📖','hindi':'📝','history':'🏛️',
+  'geography':'🌍','computer':'💻','science':'🔬',
+  'economics':'📊','default':'📚'
+};
+const COLORS = [
+  'linear-gradient(135deg,#6c63ff,#a78bfa)',
+  'linear-gradient(135deg,#f472b6,#fb923c)',
+  'linear-gradient(135deg,#34d399,#06b6d4)',
+  'linear-gradient(135deg,#fbbf24,#f87171)',
+  'linear-gradient(135deg,#818cf8,#38bdf8)',
+  'linear-gradient(135deg,#e879f9,#6366f1)',
+];
+
+// ─── STATE ────────────────────────────────────────────────
+let contentData = {};
+let activeBatch = null;
+let progress = JSON.parse(localStorage.getItem('ap_progress') || '{}');
+let history = JSON.parse(localStorage.getItem('ap_history') || '[]');
+let streak = parseInt(localStorage.getItem('ap_streak') || '0');
+
+// ─── INIT ─────────────────────────────────────────────────
+window.onload = async () => {
+  updateStreak();
+  await loadContent();
+  setTimeout(() => {
+    document.getElementById('loader').style.opacity = '0';
+    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+  }, 1500);
+};
+
+async function loadContent() {
+  try {
+    const res = await fetch(DATA_URL);
+    if(!res.ok) throw new Error('Local data not found, trying backend');
+    contentData = await res.json();
+  } catch {
+    try {
+      const res = await fetch(`${BACKEND}/content`);
+      contentData = await res.json();
+    } catch {
+      contentData = getDemoData();
+      showToast('⚠️ Demo mode — Backend connect nahi hua', 4000);
+    }
+  }
+  renderAll();
+}
+
+function getDemoData() {
+  return {
+    batches: {
+      "SIGMA 8.0": {
+        subjects: {
+          "Physics": { teacher: "Alakh Pandey", chapters: {"Mechanics":{ lectures:[{lec_no:"L-01",title:"Newton's Laws",video_id:1001,notes_id:1}] }} },
+          "Chemistry": { teacher: "Pradeep Dahiya", chapters: {"Organic":{ lectures:[{lec_no:"L-01",title:"Carbon Compounds",video_id:1002,notes_id:2}] }} },
+          "Mathematics": { teacher: "NV Sir", chapters: {"Calculus":{ lectures:[{lec_no:"L-01",title:"Limits",video_id:1003,notes_id:3}] }} },
+          "Biology": { teacher: "Garima Goel", chapters: {"Cell":{ lectures:[{lec_no:"L-01",title:"Cell Structure",video_id:1004,notes_id:4}] }} }
+        }
+      },
+      "ALPHA 3.0": {
+        subjects: {
+          "Physics": { teacher: "HC Verma", chapters: {"Electrostatics":{ lectures:[{lec_no:"L-01",title:"Coulomb's Law",video_id:2001,notes_id:5}] }} },
+          "Maths": { teacher: "RD Sharma", chapters: {"Algebra":{ lectures:[{lec_no:"L-01",title:"Quadratic Eq",video_id:2002,notes_id:6}] }} }
+        }
+      }
+    }
+  };
+}
+
+// ─── RENDER ───────────────────────────────────────────────
+function renderAll() {
+  const batches = Object.keys(contentData.batches || {});
+  if(!batches.length) return;
+
+  // Stats
+  let totalSub=0, totalLec=0;
+  batches.forEach(b => {
+    const subs = Object.keys(contentData.batches[b].subjects || {});
+    totalSub += subs.length;
+    subs.forEach(s => {
+      const chaps = Object.values(contentData.batches[b].subjects[s].chapters || {});
+      chaps.forEach(c => totalLec += (c.lectures||[]).length);
+    });
+  });
+  document.getElementById('totalBatches').textContent = batches.length;
+  document.getElementById('totalSubjects').textContent = totalSub;
+  document.getElementById('totalLectures').textContent = totalLec;
+  document.getElementById('watchedCount').textContent = Object.keys(progress).filter(k=>progress[k]===100).length;
+
+  // Batch tabs
+  activeBatch = batches[0];
+  const tabs = document.getElementById('batchTabs');
+  tabs.innerHTML = batches.map((b,i) =>
+    `<button class="batch-tab ${i===0?'active':''}" onclick="selectBatch('${b}',this)">${b}</button>`
+  ).join('');
+
+  renderSubjects();
+  renderContinue();
+}
+
+function selectBatch(name, el) {
+  activeBatch = name;
+  document.querySelectorAll('.batch-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderSubjects();
+}
+
+function renderSubjects() {
+  const grid = document.getElementById('subjectsGrid');
+  const batch = contentData.batches[activeBatch];
+  if(!batch) { grid.innerHTML = '<div style="color:var(--text3);padding:20px;">Koi data nahi mila</div>'; return; }
+
+  const subjects = Object.entries(batch.subjects || {});
+  grid.innerHTML = subjects.map(([name, data], i) => {
+    const key = name.toLowerCase();
+    const icon = ICONS[key] || ICONS['default'];
+    const color = COLORS[i % COLORS.length];
+    const chapCount = Object.keys(data.chapters||{}).length;
+    const lecCount = Object.values(data.chapters||{}).reduce((a,c)=>a+(c.lectures||[]).length,0);
+    const prog = getSubjectProgress(activeBatch, name, data);
+    const circumference = 2 * Math.PI * 16;
+    const offset = circumference - (prog/100) * circumference;
+
+    return `
+    <a class="subject-card" href="player.html?batch=${encodeURIComponent(activeBatch)}&subject=${encodeURIComponent(name)}" onclick="saveLastVisit('${activeBatch}','${name}')">
+      <div class="card-accent-line" style="background:${color}"></div>
+      <span class="icon">${icon}</span>
+      <div class="subject-name">${name}</div>
+      <div class="teacher">👨‍🏫 ${data.teacher||'Teacher'}</div>
+      <div class="meta">
+        <div class="chapters">📚 ${chapCount} ch · 🎬 ${lecCount} lec</div>
+        <div class="progress-ring">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle class="bg" cx="20" cy="20" r="16"/>
+            <circle class="fill" cx="20" cy="20" r="16"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"
+              stroke="${color.includes('6c63ff')?'#6c63ff':'#f472b6'}"/>
+          </svg>
+          <div class="pct">${Math.round(prog)}%</div>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function renderContinue() {
+  if(!history.length) return;
+  const sec = document.getElementById('continueSection');
+  const list = document.getElementById('continueList');
+  sec.style.display = 'block';
+
+  list.innerHTML = history.slice(0,3).map(item => {
+    const prog = progress[item.videoId] || 0;
+    return `
+    <a class="continue-item" href="video.html?id=${item.videoId}&batch=${encodeURIComponent(item.batch)}&subject=${encodeURIComponent(item.subject)}&title=${encodeURIComponent(item.title)}">
+      <div class="continue-thumb">${ICONS[item.subject?.toLowerCase()]||'📚'}</div>
+      <div class="continue-info">
+        <div class="lec-title">${item.title}</div>
+        <div class="lec-sub">${item.batch} · ${item.subject}</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${prog}%"></div></div>
+      </div>
+      <div class="continue-play">▶</div>
+    </a>`;
+  }).join('');
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────
+function getSubjectProgress(batch, subject, data) {
+  let total=0, watched=0;
+  Object.values(data.chapters||{}).forEach(ch => {
+    (ch.lectures||[]).forEach(lec => {
+      total++;
+      if(progress[lec.video_id] >= 80) watched++;
+    });
+  });
+  return total ? (watched/total)*100 : 0;
+}
+
+// ─── SEARCH ───────────────────────────────────────────────
+function filterContent() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  if(!q) { renderSubjects(); return; }
+  const grid = document.getElementById('subjectsGrid');
+  const batch = contentData.batches[activeBatch];
+  if(!batch) return;
+  const subjects = Object.entries(batch.subjects||{}).filter(([n])=>n.toLowerCase().includes(q));
+  if(!subjects.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:40px;">🔍 "${q}" nahi mila</div>`;
+    return;
+  }
+  // Re-render with filtered
+  const orig = Object.entries(batch.subjects||{});
+  grid.innerHTML = orig.filter(([n])=>n.toLowerCase().includes(q)).map(([n,d],i)=>{
+    return buildSubjectCard(n,d,activeBatch,i);
+  }).join('');
+}
+
+function buildSubjectCard(name,data,batch,i) {
+  const key=name.toLowerCase();
+  const icon=ICONS[key]||ICONS['default'];
+  const color=COLORS[i%COLORS.length];
+  const chapCount=Object.keys(data.chapters||{}).length;
+  const lecCount=Object.values(data.chapters||{}).reduce((a,c)=>a+(c.lectures||[]).length,0);
+  const prog=getSubjectProgress(batch,name,data);
+  const circumference=2*Math.PI*16;
+  const offset=circumference-(prog/100)*circumference;
+  return `<a class="subject-card" href="player.html?batch=${encodeURIComponent(batch)}&subject=${encodeURIComponent(name)}">
+    <div class="card-accent-line" style="background:${color}"></div>
+    <span class="icon">${icon}</span>
+    <div class="subject-name">${name}</div>
+    <div class="teacher">👨‍🏫 ${data.teacher||'Teacher'}</div>
+    <div class="meta">
+      <div class="chapters">📚 ${chapCount} ch · 🎬 ${lecCount} lec</div>
+      <div class="progress-ring">
+        <svg viewBox="0 0 40 40" width="40" height="40">
+          <circle class="bg" cx="20" cy="20" r="16"/>
+          <circle class="fill" cx="20" cy="20" r="16"
+            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke="#6c63ff"/>
+        </svg>
+        <div class="pct">${Math.round(prog)}%</div>
+      </div>
+    </div>
+  </a>`;
+}
+
+// ─── UTILITIES ────────────────────────────────────────────
+function saveLastVisit(batch, subject) {
+  // stored in player.html navigation
+}
+
+function clearHistory() {
+  history = [];
+  localStorage.setItem('ap_history','[]');
+  document.getElementById('continueSection').style.display='none';
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastVisit = localStorage.getItem('ap_lastVisit');
+  if(lastVisit !== today) {
+    const yesterday = new Date(Date.now()-86400000).toDateString();
+    if(lastVisit === yesterday) streak++;
+    else if(lastVisit !== today) streak = 1;
+    localStorage.setItem('ap_lastVisit', today);
+    localStorage.setItem('ap_streak', streak);
+  }
+  document.getElementById('streakCount').textContent = streak;
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-btn').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('ap_theme', isDark ? 'light' : 'dark');
+}
+
+function showToast(msg, dur=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), dur);
+}
+
+// Apply saved theme
+const savedTheme = localStorage.getItem('ap_theme');
+if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+</script>
+</body>
+</html>
