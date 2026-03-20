@@ -1,7 +1,12 @@
 {
   "batches": {
     "AK 11TH": {
-      "subjects": {}
+      "subjects": {
+        "Organic": {
+          "teacher": "SKM SIR",
+          "chapters": {}
+        }
+      }
     }
   },
   "lecture_ids": {}
