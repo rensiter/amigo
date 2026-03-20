@@ -4,7 +4,11 @@
       "subjects": {
         "Organic": {
           "teacher": "SKM SIR",
-          "chapters": {}
+          "chapters": {
+            "ISOMERISM": {
+              "lectures": []
+            }
+          }
         }
       }
     }
