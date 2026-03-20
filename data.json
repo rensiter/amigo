@@ -6,12 +6,21 @@
           "teacher": "GB SIR",
           "chapters": {
             "PARABOLA": {
-              "lectures": []
+              "lectures": [
+                {
+                  "lec_no": "L-01",
+                  "title": "Parabola | L-01 | Basic Of C S Terminology Standard Equ NJ_247",
+                  "video_id": 11,
+                  "notes_id": null
+                }
+              ]
             }
           }
         }
       }
     }
   },
-  "lecture_ids": {}
+  "lecture_ids": {
+    "PARABOLA__1": 11
+  }
 }
