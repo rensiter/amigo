@@ -6,12 +6,21 @@
           "teacher": "Na sir",
           "chapters": {
             "Nlm": {
-              "lectures": []
+              "lectures": [
+                {
+                  "lec_no": "L-01",
+                  "title": "5b1e4895e4b04d0741d1349e",
+                  "video_id": 13,
+                  "notes_id": null
+                }
+              ]
             }
           }
         }
       }
     }
   },
-  "lecture_ids": {}
+  "lecture_ids": {
+    "Nlm__1": 13
+  }
 }
