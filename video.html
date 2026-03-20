@@ -421,7 +421,7 @@ video{width:100%;height:100%;display:block;}
 // ══════════════════════════════════════════════════════════
 const SRV = {
   railway: 'https://amigo-backend-production.up.railway.app',  // Primary — always ON
-  render:  'https://amigo-backend-production.up.railway.app'      // Backup  — free tier sleeps
+  render:  ''   // Render setup nahi hua — empty rakho
 };
 const DATA_URL = 'data.json';
 
@@ -474,16 +474,18 @@ window.onload = async () => {
 // ══════════════════════════════════════════════════════════
 function startVideo() {
   activeSrv = 'railway';
-  vid.src   = `${SRV.railway}/stream/direct/${VID}`;
+  // Seedha stream karo — health check ki zarurat nahi
+  vid.src = `${SRV.railway}/stream/direct/${VID}`;
   vid.load();
   resumePos();
-  // Server bar chhupa hua — student ko koi indicator nahi
 }
 
 // ══════════════════════════════════════════════════════════
 //  2️⃣  BACKGROUND MEIN RENDER JAGAO — STUDENT KO PATA NA CHALE
 // ══════════════════════════════════════════════════════════
 async function wakeRenderBg() {
+  // Render URL nahi hai toh skip karo
+  if (!SRV.render) { console.log("Render disabled"); return; }
   if (renderPing || renderUp) return;
   renderPing = true;
   // Try every 6 seconds, upto 90 seconds total
@@ -515,7 +517,7 @@ async function wakeRenderBg() {
 //   - Chapter khatam ho (next chapter render se)
 // ══════════════════════════════════════════════════════════
 function doSilentSwitch() {
-  if (!swPending || !renderUp || activeSrv === 'render') return;
+  if (!SRV.render || !swPending || !renderUp || activeSrv === 'render') return;
   swPending = false;
 
   const pos      = vid.currentTime;
