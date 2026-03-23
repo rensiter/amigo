@@ -1,7 +1,12 @@
 {
   "batches": {
     "Kapil Show": {
-      "subjects": {}
+      "subjects": {
+        "New": {
+          "teacher": "Kapil Sharma",
+          "chapters": {}
+        }
+      }
     }
   },
   "lecture_ids": {}
