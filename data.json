@@ -6,12 +6,21 @@
           "teacher": "Kapil Sharma",
           "chapters": {
             "2026": {
-              "lectures": []
+              "lectures": [
+                {
+                  "lec_no": "L-01",
+                  "title": "The_Great_Indian_Kapil_Show_S04E01_1080p_Hindi_WEB_DL_5_1_ESub_x264",
+                  "video_id": 26,
+                  "notes_id": null
+                }
+              ]
             }
           }
         }
       }
     }
   },
-  "lecture_ids": {}
+  "lecture_ids": {
+    "2026__1": 26
+  }
 }
