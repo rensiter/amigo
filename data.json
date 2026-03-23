@@ -1,40 +1,8 @@
 {
   "batches": {
-    "AK 11TH": {
-      "subjects": {
-        "Organic": {
-          "teacher": "SKM SIR",
-          "chapters": {
-            "ISOMERISM": {
-              "lectures": [
-                {
-                  "lec_no": "L-01",
-                  "title": "1 - JEE Main 2025 PYQs - Unit Dimensions Errors & Vector",
-                  "video_id": 19,
-                  "notes_id": null
-                },
-                {
-                  "lec_no": "L-02",
-                  "title": "3_JEE_Main_2025_PYQs_WEP⧸COM_Collision_⧸_Rotation_｜_",
-                  "video_id": 23,
-                  "notes_id": null
-                },
-                {
-                  "lec_no": "L-03",
-                  "title": "4_JEE_Main_2025_PYQs_Gravitation_&_SHM_｜_April_Attem",
-                  "video_id": 25,
-                  "notes_id": null
-                }
-              ]
-            }
-          }
-        }
-      }
+    "Kapil Show": {
+      "subjects": {}
     }
   },
-  "lecture_ids": {
-    "ISOMERISM__1": 19,
-    "ISOMERISM__2": 23,
-    "ISOMERISM__3": 25
-  }
+  "lecture_ids": {}
 }
