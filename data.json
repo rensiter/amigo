@@ -4,7 +4,11 @@
       "subjects": {
         "New": {
           "teacher": "Kapil Sharma",
-          "chapters": {}
+          "chapters": {
+            "2026": {
+              "lectures": []
+            }
+          }
         }
       }
     }
